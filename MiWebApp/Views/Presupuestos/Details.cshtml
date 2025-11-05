@@ -1,0 +1,52 @@
+@model Presupuestos.Presupuesto
+
+<section class="container mt-4">
+    <h2 class="text-center">Detalle del Presupuesto</h2>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Presupuesto N° @Model.IdPresupuesto</h5>
+            <p><strong>Destinatario:</strong> @Model.NombreDestinatario</p>
+            <p><strong>Fecha de creación:</strong> @Model.FechaCreacion1.ToShortDateString()</p>
+
+            @if (Model.Detalle != null && Model.Detalle.Count > 0)
+            {
+                <h4 class="mt-4">Productos del presupuesto</h4>
+                <table class="table table-striped mt-3">
+                    <thead class="table-success">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio Unitario</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var d in Model.Detalle)
+                        {
+                            <tr>
+                                <td>@d.Producto.Descripcion</td>
+                                <td>$@d.Producto.Precio</td>
+                                <td>@d.Cantidad</td>
+                                <td>$@(d.Producto.Precio * d.Cantidad)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="alert alert-warning">Este presupuesto no tiene productos asociados.</p>
+            }
+
+            <div class="mt-3">
+                <p><strong>Total sin IVA:</strong> $@Model.MontoPresupuesto()</p>
+                <p><strong>Total con IVA:</strong> $@Model.MontoPresupuestoConIva()</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+    </div>
+</section>

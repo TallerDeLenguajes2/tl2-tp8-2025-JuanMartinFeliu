@@ -1,0 +1,19 @@
+@model Productos.Producto
+
+<section class="container mt-4">
+    <h2 class="text-center">Detalles del Producto</h2>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Descripcion</h5>
+            <p><strong>ID:</strong> @Model.IdProducto</p>
+            <p><strong>Precio:</strong> $@Model.Precio</p>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="Edit" asp-route-id="@Model.IdProducto" class="btn btn-primary">Editar</a>
+        <a asp-action="Delete" asp-route-id="@Model.IdProducto" class="btn btn-danger">Eliminar</a>
+        <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+    </div>
+</section>

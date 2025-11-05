@@ -1,0 +1,11 @@
+@model Productos.Producto
+<section class="container mt-4">
+    <h2>Eliminar Producto</h2>
+    <p>¿Seguro que deseas eliminar el producto <strong>@Model.Descripcion</strong>?</p>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="IdProducto" />
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</section>

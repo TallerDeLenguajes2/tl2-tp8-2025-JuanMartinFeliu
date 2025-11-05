@@ -1,0 +1,16 @@
+@model Productos.Producto
+<section class="container mt-4">
+    <h2>Crear Producto</h2>
+    <form asp-action="Create" method="post">
+        <div class="form-group mt-2">
+            <label>Nombre</label>
+            <input asp-for="Descripcion" class="form-control" />
+        </div>
+        <div class="form-group mt-2">
+            <label>Precio</label>
+            <input asp-for="Precio" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Guardar</button>
+        <a asp-action="Index" class="btn btn-secondary mt-3">Cancelar</a>
+    </form>
+</section>
