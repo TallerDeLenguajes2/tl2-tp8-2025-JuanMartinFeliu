@@ -78,7 +78,7 @@ namespace presupuestosRepository
     lector.Close();
 
     // Ahora traemos los productos asociados (detalle)
-    string consultaDetalle = @"SELECT pd.IdProducto, pd.Cantidad, p.Nombre, p.Precio
+    string consultaDetalle = @"SELECT pd.IdProducto, pd.Cantidad, p.Descripcion, p.Precio
                                FROM PresupuestosDetalle pd
                                JOIN Productos p ON p.IdProducto = pd.IdProducto
                                WHERE pd.IdPresupuesto = @Id";
