@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Productos;
 using productoRepository;
+using SistemaVentas.Web.ViewModels;
+using System.Threading.RateLimiting;
 
 namespace tl2_tp7_2025_JuanMartinFeliu.Controllers;
 
@@ -32,13 +34,22 @@ public class ProductoController : Controller
 
     // Crear POST
     [HttpPost]
-    public IActionResult Create(Producto nuevo)
+    public IActionResult Create(ProductoViewModel productoVM)
     {
         if (!ModelState.IsValid)
-            return View(nuevo);
+        {
+            return View(productoVM);
+        }
 
-        productoRepository.CrearProducto(nuevo);
-        return RedirectToAction("Index");
+        var nuevoProducto = new Producto
+        {
+            Descripcion = productoVM.Descripcion,
+            Precio = productoVM.Precio
+        };
+
+        productoRepository.CrearProducto(nuevoProducto);
+        return RedirectToAction(nameof(Index));
+
     }
 
     //  EDITAR (GET)
@@ -53,10 +64,31 @@ public class ProductoController : Controller
 
     //  EDITAR (POST)
     [HttpPost]
-    public IActionResult Edit(Producto prod)
+    public IActionResult Edit(int idBuscado, ProductoViewModel productoVM)
     {
-        productoRepository.ModificarProductos(prod, prod.IdProducto);
-        return RedirectToAction("Index");
+        if (idBuscado != productoVM.IdProducto)
+        {
+            return NotFound();
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View(productoVM);
+        }
+
+        // Mapeo Manual de VM a Modelo de Dominio
+        var ProductoAEditar = new Producto
+        {
+            IdProducto = productoVM.IdProducto,
+            Descripcion = productoVM.Descripcion,
+            Precio = productoVM.Precio
+        };
+
+        // 3. Llamada al Repositorio
+
+        productoRepository.ModificarProductos(ProductoAEditar, idBuscado);
+        return RedirectToAction(nameof(Index));
+
     }
 
     //  ELIMINAR (GET)
