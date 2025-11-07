@@ -13,6 +13,7 @@ namespace presupuestosRepository
         public Presupuesto ObtenerDetallesPresupuesto(int idBuscado);
         public void AgregarProducto(int idBuscado);
         public void EliminarPresupuesto(int idBuscado);
+        public void ModificarPresupuesto(int idPresupuesto, Presupuesto presupuesto);
 
     }
 
@@ -125,6 +126,24 @@ namespace presupuestosRepository
             comando.ExecuteNonQuery();
         }
 
+        // Añade este método a PresupuestosRepository.cs
 
+        public void ModificarPresupuesto(int idPresupuesto, Presupuesto presupuesto)
+        {
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                
+                // Actualizamos solo los campos que vienen del ViewModel
+                command.CommandText = "UPDATE Presupuestos SET NombreDestinatario = @Nombre, FechaCreacion1 = @Fecha WHERE IdPresupuesto = @Id";
+                
+                command.Parameters.AddWithValue("@Nombre", presupuesto.NombreDestinatario);
+                command.Parameters.AddWithValue("@Fecha", presupuesto.FechaCreacion1);
+                command.Parameters.AddWithValue("@Id", idPresupuesto);
+
+                command.ExecuteNonQuery();
+            }
+        }
     }
 }

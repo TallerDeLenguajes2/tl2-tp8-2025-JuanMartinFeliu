@@ -14,7 +14,7 @@ namespace SistemaVentas.Web.ViewModels
 
         //FechaCreacion tiene que ser requerido y controlar el tipo de dato
         [Display(Name = " Fecha de Creacion")]
-        [Required(ErrorMessage = "La fechs es obligatoria")]
+        [Required(ErrorMessage = "La fecha es obligatoria")]
         [DataType(DataType.Date)]
         public DateTime FechaCreacion{ get; set; }
     }

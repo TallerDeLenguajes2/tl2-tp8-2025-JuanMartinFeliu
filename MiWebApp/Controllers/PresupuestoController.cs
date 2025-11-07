@@ -57,46 +57,37 @@ public class PresupuestosController : Controller
         return View(model);
     }
 
-    // 🟢 CREAR (POST)
+    // 🟢 CREAR (POST) - CORRECCIÓN
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(PresupuestoViewModel presupuestoVM)
     {
-        if (!ModelState.IsValid)
-        {
-            return View(presupuestoVM);
-        }
+    // 1. Chequeo de Data Annotations
+    if (!ModelState.IsValid)
+    {
+        return View(presupuestoVM);
+    }
 
-        if (presupuestoVM.FechaCreacion.Date > DateTime.Now.Date)
-        {
-            ModelState.AddModelError("FechaCreacion", "La fecha de creación no puede ser futura.");
-            return View(presupuestoVM);
-        }
-        
-        // 3. LÓGICA DE MAPEO (VM -> Modelo de Dominio)
-    // (Aquí está el mapeo completo que solicitaste)
+    // 2. Validación manual de fecha futura (REQUERIDA POR TP)
+    if (presupuestoVM.FechaCreacion.Date > DateTime.Now.Date)
+    {
+        ModelState.AddModelError("FechaCreacion", "La fecha de creación no puede ser futura.");
+        return View(presupuestoVM);
+    }
+
+    // 3. Mapeo de ViewModel a Modelo de Dominio
     var nuevoPresupuesto = new Presupuesto
     {
-        // Mapeamos las propiedades del ViewModel a la entidad de dominio
         NombreDestinatario = presupuestoVM.NombreDestinatario,
-        
-        // ¡Atención! Tu modelo Presupuestos.cs usa "FechaCreacion1"
-        // Mapeamos presupuestoVM.FechaCreacion a nuevoPresupuesto.FechaCreacion1
-        FechaCreacion1 = presupuestoVM.FechaCreacion, 
-        
-        // Al crear un presupuesto nuevo, la lista de detalles empieza vacía.
-        // (Probablemente necesites agregar 'using PresupuestosDetalle;' 
-        // al inicio de tu PresupuestoController.cs para que reconozca la clase PresupuestoDetalle)
-        Detalle = new List<PresupuestoDetalle>() 
+        FechaCreacion1 = presupuestoVM.FechaCreacion, // Mapear a FechaCreacion1
+        Detalle = new List<PresupuestosDetalle.PresupuestoDetalle>() // Nuevo presupuesto inicia con detalle vacío
     };
 
-        // 4. GUARDADO (Llamada al Repositorio)
-        // (Usando el 'presupuestoRepository' inicializado en tu constructor)
-        presupuestoRepository.CrearPresupuesto(nuevoPresupuesto);
+    // 4. Guardado en Repositorio (con el modelo de dominio)
+    presupuestoRepository.CrearPresupuesto(nuevoPresupuesto);
 
-        // 5. REDIRECCIÓN
-        // Redirigimos al Index cuando todo sale bien
-        return RedirectToAction(nameof(Index));
+    // 5. Redirección
+    return RedirectToAction(nameof(Index));
     }
 
     // 🟡 EDITAR (GET)
@@ -105,24 +96,53 @@ public class PresupuestosController : Controller
     {
         var presupuesto = presupuestoRepository.ObtenerDetallesPresupuesto(id);
         if (presupuesto == null)
+        {
             return NotFound();
+        }
+        // mapeo el model a view model
+        var presupuestoVM = new PresupuestoViewModel
+        {
+            IdPresupuesto = presupuesto.IdPresupuesto,
+            NombreDestinatario = presupuesto.NombreDestinatario,
+            FechaCreacion = presupuesto.FechaCreacion1
+        };
 
-        return View(presupuesto);
+        return View(presupuestoVM);
     }
 
     // 🟡 EDITAR (POST)
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(Presupuesto presup)
+    public IActionResult Edit(int id,PresupuestoViewModel presupuestoVM)
     {
+        if (id != presupuestoVM.IdPresupuesto)
+        {
+            return NotFound();
+        }
+
         if (!ModelState.IsValid)
-            return View(presup);
+        {
+            return View(presupuestoVM);
+        }
 
-        // No tenés un método específico para editar, así que reutilizamos el delete + insert
-        presupuestoRepository.EliminarPresupuesto(presup.IdPresupuesto);
-        presupuestoRepository.CrearPresupuesto(presup);
+        //valido la fecha
+        if (presupuestoVM.FechaCreacion.Date > DateTime.Now.Date)
+        {
+            ModelState.AddModelError("FechaCreacion", "La fecha de creación no puede ser futura.");
+            return View(presupuestoVM);
+        }
 
-        return RedirectToAction("Index");
+        //mapeo
+        var presupuestoAEditar = new Presupuesto
+        {
+            IdPresupuesto = presupuestoVM.IdPresupuesto,
+            NombreDestinatario = presupuestoVM.NombreDestinatario,
+            FechaCreacion1 = presupuestoVM.FechaCreacion
+        };
+
+        presupuestoRepository.ModificarPresupuesto(presupuestoAEditar.IdPresupuesto, presupuestoAEditar);
+
+        return RedirectToAction(nameof(Index));
     }
 
     // 🔴 ELIMINAR (GET)
