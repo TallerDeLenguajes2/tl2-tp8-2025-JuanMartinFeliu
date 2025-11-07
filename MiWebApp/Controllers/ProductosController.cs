@@ -58,8 +58,17 @@ public class ProductoController : Controller
     {
         var prod = productoRepository.ObtenerDetallesProducto(id);
         if (prod == null)
+        {
             return NotFound();
-        return View(prod);
+        }
+        // mapeo a ViewModel
+        var productoVM = new ProductoViewModel
+        {
+            IdProducto = prod.IdProducto,
+            Descripcion = prod.Descripcion,
+            Precio = prod.Precio
+        };
+        return View(productoVM);
     }
 
     //  EDITAR (POST)

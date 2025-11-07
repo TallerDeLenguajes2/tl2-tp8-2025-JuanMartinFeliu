@@ -5,6 +5,7 @@ using productoRepository;
 using SistemaVentas.Web.ViewModels; //Necesario para poder llegar a los ViewModels
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Productos; // Necesario para SelectList
+using PresupuestosDetalle;
 
 
 namespace tl2_tp7_2025_JuanMartinFeliu.Controllers;
@@ -18,6 +19,7 @@ public class PresupuestosController : Controller
     public PresupuestosController()
     {
         presupuestoRepository = new PresupuestoRepository();
+        productoRepository = new ProductoRepository();
     }
 
     // 📘 LISTAR (READ - INDEX)
@@ -58,24 +60,43 @@ public class PresupuestosController : Controller
     // 🟢 CREAR (POST)
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(AgregarProductoViewModel model)
+    public IActionResult Create(PresupuestoViewModel presupuestoVM)
     {
         if (!ModelState.IsValid)
         {
-            // LÓGICA CRÍTICA DE RECARGA: Si falla la validación,
-            // debemos recargar el SelectList porque se pierde en el POST.
-            var productos = productoRepository.ListarProductos();
-            model.ListaProductos = new SelectList(productos, "IdProducto", "Descripcion");
-
-            //Devolvemos el modelo con los errores y el dropdown recargado
-            return View(model);
+            return View(presupuestoVM);
         }
-            
-        // 2. Si es VÁLIDO: Llamamos al repositorio para guardar la relación
-        _repo.AddDetalle(model.IdPresupuesto, model.IdProducto, model.Cantidad);
 
-        // 3. Redirigimos al detalle del presupuesto
-        return RedirectToAction(nameof(Details), new { id = model.IdPresupuesto });
+        if (presupuestoVM.FechaCreacion.Date > DateTime.Now.Date)
+        {
+            ModelState.AddModelError("FechaCreacion", "La fecha de creación no puede ser futura.");
+            return View(presupuestoVM);
+        }
+        
+        // 3. LÓGICA DE MAPEO (VM -> Modelo de Dominio)
+    // (Aquí está el mapeo completo que solicitaste)
+    var nuevoPresupuesto = new Presupuesto
+    {
+        // Mapeamos las propiedades del ViewModel a la entidad de dominio
+        NombreDestinatario = presupuestoVM.NombreDestinatario,
+        
+        // ¡Atención! Tu modelo Presupuestos.cs usa "FechaCreacion1"
+        // Mapeamos presupuestoVM.FechaCreacion a nuevoPresupuesto.FechaCreacion1
+        FechaCreacion1 = presupuestoVM.FechaCreacion, 
+        
+        // Al crear un presupuesto nuevo, la lista de detalles empieza vacía.
+        // (Probablemente necesites agregar 'using PresupuestosDetalle;' 
+        // al inicio de tu PresupuestoController.cs para que reconozca la clase PresupuestoDetalle)
+        Detalle = new List<PresupuestoDetalle>() 
+    };
+
+        // 4. GUARDADO (Llamada al Repositorio)
+        // (Usando el 'presupuestoRepository' inicializado en tu constructor)
+        presupuestoRepository.CrearPresupuesto(nuevoPresupuesto);
+
+        // 5. REDIRECCIÓN
+        // Redirigimos al Index cuando todo sale bien
+        return RedirectToAction(nameof(Index));
     }
 
     // 🟡 EDITAR (GET)
