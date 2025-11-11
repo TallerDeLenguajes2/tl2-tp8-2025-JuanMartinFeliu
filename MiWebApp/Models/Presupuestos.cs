@@ -1,9 +1,9 @@
 using System;
 using PresupuestosDetalle;
 
-namespace Presupuestos{
+namespace Presupuestos {
 
-    public class Presupuesto{
+    public class Presupuesto {
         private int idPresupuesto;
         private string nombreDestinatario;
         private DateTime fechaCreacion;
@@ -30,14 +30,14 @@ namespace Presupuestos{
             this.detalle = detalle;
         }
 
-        
+
 
 
         // Empiezan los metodos
 
-        public float MontoPresupuesto()
+        public double MontoPresupuesto()
         {
-            float monto = 0;
+            double monto = 0;
             foreach(var det in Detalle)
             {
                 monto = monto + det.Producto.Precio * det.Cantidad;
