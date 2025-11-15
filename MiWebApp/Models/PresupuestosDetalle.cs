@@ -8,8 +8,6 @@ namespace PresupuestosDetalle
         private Producto producto;
         private int cantidad;
 
-        public Producto Producto { get; set; }
-        public int Cantidad { get; set; }
 
         public PresupuestoDetalle()
         {
@@ -18,8 +16,11 @@ namespace PresupuestosDetalle
 
         public PresupuestoDetalle(Producto prod, int cant)
         {
-            this.producto = prod;
-            this.cantidad = cant;
+            this.Producto = prod;
+            this.Cantidad = cant;
         }
+
+        public Producto Producto { get => producto; set => producto = value; }
+        public int Cantidad { get => cantidad; set => cantidad = value; }
     }
 }

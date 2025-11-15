@@ -9,25 +9,26 @@ namespace Presupuestos {
         private DateTime fechaCreacion;
         private List<PresupuestoDetalle> detalle;
 
+        public int IdPresupuesto { get => idPresupuesto; set => idPresupuesto = value; }
+        public string NombreDestinatario { get => nombreDestinatario; set => nombreDestinatario = value; }
+        public DateTime FechaCreacion { get => fechaCreacion; set => fechaCreacion = value; }
+        public List<PresupuestoDetalle> Detalle { get => detalle; set => detalle = value; }
+
         //Defino los get set publicos
-        public int IdPresupuesto { get; set; }
-        public string NombreDestinatario { get; set; }
-        public DateTime FechaCreacion1 { get; set; }
-        public List<PresupuestoDetalle> Detalle { get; set; }
 
         // Hago los Constructores
 
         public Presupuesto()
         {
-
+        detalle =new  List<PresupuestoDetalle>();
         }
 
         public Presupuesto(int id, string nombre, DateTime fecha, List<PresupuestoDetalle> detalle)
         {
-            this.idPresupuesto = id;
-            this.nombreDestinatario = nombre;
-            this.fechaCreacion = fecha;
-            this.detalle = detalle;
+            this.IdPresupuesto = id;
+            this.NombreDestinatario = nombre;
+            this.FechaCreacion = fecha;
+            this.Detalle = detalle;
         }
 
 

@@ -79,7 +79,7 @@ public class PresupuestosController : Controller
     var nuevoPresupuesto = new Presupuesto
     {
         NombreDestinatario = presupuestoVM.NombreDestinatario,
-        FechaCreacion1 = presupuestoVM.FechaCreacion, // Mapear a FechaCreacion1
+        FechaCreacion = presupuestoVM.FechaCreacion, // Mapear a FechaCreacion1
         Detalle = new List<PresupuestosDetalle.PresupuestoDetalle>() // Nuevo presupuesto inicia con detalle vacío
     };
 
@@ -104,7 +104,7 @@ public class PresupuestosController : Controller
         {
             IdPresupuesto = presupuesto.IdPresupuesto,
             NombreDestinatario = presupuesto.NombreDestinatario,
-            FechaCreacion = presupuesto.FechaCreacion1
+            FechaCreacion = presupuesto.FechaCreacion
         };
 
         return View(presupuestoVM);
@@ -137,7 +137,7 @@ public class PresupuestosController : Controller
         {
             IdPresupuesto = presupuestoVM.IdPresupuesto,
             NombreDestinatario = presupuestoVM.NombreDestinatario,
-            FechaCreacion1 = presupuestoVM.FechaCreacion
+            FechaCreacion = presupuestoVM.FechaCreacion
         };
 
         presupuestoRepository.ModificarPresupuesto(presupuestoAEditar.IdPresupuesto, presupuestoAEditar);

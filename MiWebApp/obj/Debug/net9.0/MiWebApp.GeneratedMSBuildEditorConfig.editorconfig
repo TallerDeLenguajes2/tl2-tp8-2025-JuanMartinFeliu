@@ -52,24 +52,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlc3VwdWVzdG9zXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Taller de Lenguajes ll/tl2-tp8-2025-JuanMartinFeliu/MiWebApp/Views/Producto/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cQ3JlYXRlLmNzaHRtbA==
+[D:/Taller de Lenguajes ll/tl2-tp8-2025-JuanMartinFeliu/MiWebApp/Views/Productos/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9zXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Taller de Lenguajes ll/tl2-tp8-2025-JuanMartinFeliu/MiWebApp/Views/Producto/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cRGVsZXRlLmNzaHRtbA==
+[D:/Taller de Lenguajes ll/tl2-tp8-2025-JuanMartinFeliu/MiWebApp/Views/Productos/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9zXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Taller de Lenguajes ll/tl2-tp8-2025-JuanMartinFeliu/MiWebApp/Views/Producto/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cRGV0YWlscy5jc2h0bWw=
+[D:/Taller de Lenguajes ll/tl2-tp8-2025-JuanMartinFeliu/MiWebApp/Views/Productos/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9zXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Taller de Lenguajes ll/tl2-tp8-2025-JuanMartinFeliu/MiWebApp/Views/Producto/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cRWRpdC5jc2h0bWw=
+[D:/Taller de Lenguajes ll/tl2-tp8-2025-JuanMartinFeliu/MiWebApp/Views/Productos/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9zXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Taller de Lenguajes ll/tl2-tp8-2025-JuanMartinFeliu/MiWebApp/Views/Producto/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cSW5kZXguY3NodG1s
+[D:/Taller de Lenguajes ll/tl2-tp8-2025-JuanMartinFeliu/MiWebApp/Views/Productos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9zXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Taller de Lenguajes ll/tl2-tp8-2025-JuanMartinFeliu/MiWebApp/Views/Shared/Error.cshtml]

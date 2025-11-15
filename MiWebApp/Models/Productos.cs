@@ -7,20 +7,24 @@ namespace Productos{
         private string descripcion;
         private int precio;
 
-        public int IdProducto {get; set;}
-        public string Descripcion {get; set;}
-        public double Precio {get; set;}
+        // public int IdProducto {get; set;}
+        // public string Descripcion {get; set;}
+        // public double Precio {get; set;}
 
         public Producto()
         {
 
         }
 
-        public Producto(int idProducto,string descripcion,int precio)
+        public Producto(int idProdu,string descrip,int prec)
         {
-            this.idProducto = idProducto;
-            this.descripcion = descripcion;
-            this.precio = precio;
+            IdProducto = idProdu;
+            Descripcion = descrip;
+            Precio = prec;
         }
+
+        public int IdProducto { get => idProducto; set => idProducto = value; }
+        public string Descripcion { get => descripcion; set => descripcion = value; }
+        public int Precio { get => precio; set => precio = value; }
     }
 }

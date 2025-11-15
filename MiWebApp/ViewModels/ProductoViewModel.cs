@@ -15,7 +15,7 @@ namespace SistemaVentas.Web.ViewModels
         //Precio debe ser positivo y requerido
         [Display(Name = "Precio Unitario")]
         [Required(ErrorMessage = "El precio debe ser obligatorio")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "El precio debe tener un valor positivo")]
-        public double Precio { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "El precio debe tener un valor positivo")]
+        public int Precio { get; set; }
     }
 }

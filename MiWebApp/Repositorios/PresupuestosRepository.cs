@@ -2,6 +2,7 @@ using System;
 using Microsoft.Data.Sqlite;
 using Presupuestos;
 using PresupuestosDetalle;
+using Productos;
 
 namespace presupuestosRepository
 {
@@ -28,7 +29,7 @@ namespace presupuestosRepository
             using var comando = new SqliteCommand(sql, conexion);
             comando.Parameters.Add(new SqliteParameter("@idPresupuesto", presup.IdPresupuesto));
             comando.Parameters.Add(new SqliteParameter("@NombreDestinatario", presup.NombreDestinatario));
-            comando.Parameters.Add(new SqliteParameter("@FechaCreacion", presup.FechaCreacion1)); comando.ExecuteNonQuery();
+            comando.Parameters.Add(new SqliteParameter("@FechaCreacion", presup.FechaCreacion)); comando.ExecuteNonQuery();
         }
 
         public List<Presupuesto> ListarPresupuestos()
@@ -47,7 +48,7 @@ namespace presupuestosRepository
                 {
                     IdPresupuesto = Convert.ToInt32(lector["idPresupuesto"]),
                     NombreDestinatario = lector["NombreDestinatario"].ToString(),
-                    FechaCreacion1 = Convert.ToDateTime(lector["FechaCreacion"])
+                    FechaCreacion = Convert.ToDateTime(lector["FechaCreacion"])
                 };
                 presupuesto.Add(pre);
             }
@@ -55,9 +56,9 @@ namespace presupuestosRepository
             return presupuesto;
         }
 
-        public Presupuesto ObtenerDetallesPresupuesto(int idBuscado)
-{
-    using var connection = new SqliteConnection(connectionString);
+ public Presupuesto ObtenerDetallesPresupuesto(int idBuscado)
+{var presupuesto = new Presupuesto();
+   /* using var connection = new SqliteConnection(connectionString);
     connection.Open();
 
     // Primero traemos los datos del presupuesto
@@ -73,38 +74,42 @@ namespace presupuestosRepository
     {
         IdPresupuesto = Convert.ToInt32(lector["idPresupuesto"]),
         NombreDestinatario = lector["NombreDestinatario"].ToString(),
-        FechaCreacion1 = Convert.ToDateTime(lector["FechaCreacion"]),
+        FechaCreacion = Convert.ToDateTime(lector["FechaCreacion"]),
         Detalle = new List<PresupuestoDetalle>()
     };
     lector.Close();
 
     // Ahora traemos los productos asociados (detalle)
-    string consultaDetalle = @"SELECT pd.IdProducto, pd.Cantidad, p.Descripcion, p.Precio
+    string consultaDetalle = @"SELECT pd.idProducto, pd.cantidad, p.Descripcion, p.Precio
                                FROM PresupuestosDetalle pd
-                               JOIN Productos p ON p.IdProducto = pd.IdProducto
-                               WHERE pd.IdPresupuesto = @Id";
+                               JOIN Productos p ON p.idProducto = pd.idProducto
+                               WHERE pd.IdPresupuesto = @Id;";
     using var comandoDet = new SqliteCommand(consultaDetalle, connection);
     comandoDet.Parameters.AddWithValue("@Id", idBuscado);
 
     using var lectorDet = comandoDet.ExecuteReader();
     while (lectorDet.Read())
     {
-        var producto = new Productos.Producto
-        {
-            IdProducto = Convert.ToInt32(lectorDet["IdProducto"]),
-            Descripcion = lectorDet["Nombre"].ToString(),
-            Precio = Convert.ToInt32(lectorDet["Precio"])
-        };
+      //  var producto= new Productos.Producto(Convert.ToInt32(lectorDet["idProducto"]),Convert.ToString(lectorDet["Descripcion"]),Convert.ToInt32(lectorDet["Precio"]));
+          Producto producto= new Producto(1,"hola",100);
+        
+        // var producto = new Productos.Producto
+        // {
+        //     IdProducto = Convert.ToInt32(lectorDet["idProducto"]),
+        //     Descripcion = lectorDet["Descripcion"].ToString(),
+        //     Precio = Convert.ToInt32(lectorDet["Precio"])
+        // };
 
         var detalle = new PresupuestosDetalle.PresupuestoDetalle
         {
             Producto = producto,
-            Cantidad = Convert.ToInt32(lectorDet["Cantidad"])
+
+            Cantidad = Convert.ToInt32(lectorDet["cantidad"])
         };
 
         presupuesto.Detalle.Add(detalle);
     }
-
+*/
     return presupuesto;
 }
 
@@ -136,10 +141,10 @@ namespace presupuestosRepository
                 var command = connection.CreateCommand();
                 
                 // Actualizamos solo los campos que vienen del ViewModel
-                command.CommandText = "UPDATE Presupuestos SET NombreDestinatario = @Nombre, FechaCreacion1 = @Fecha WHERE IdPresupuesto = @Id";
+                command.CommandText = "UPDATE Presupuestos SET NombreDestinatario = @NombreDestinatario, FechaCreacion = @FechaCreacion WHERE idPresupuesto = @Id";
                 
-                command.Parameters.AddWithValue("@Nombre", presupuesto.NombreDestinatario);
-                command.Parameters.AddWithValue("@Fecha", presupuesto.FechaCreacion1);
+                command.Parameters.AddWithValue("@NombreDestinatario", presupuesto.NombreDestinatario);
+                command.Parameters.AddWithValue("@FechaCreacion", presupuesto.FechaCreacion);
                 command.Parameters.AddWithValue("@Id", idPresupuesto);
 
                 command.ExecuteNonQuery();
